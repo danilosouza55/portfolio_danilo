@@ -1,0 +1,12 @@
+# Arquivos e diretórios específicos a serem ignorados pelo Docker durante a construção da imagem
+
+# Diretórios
+.git
+.build
+.packages
+.dart_tool
+
+# Arquivos
+pubspec.lock
+*.iml
+*.log
