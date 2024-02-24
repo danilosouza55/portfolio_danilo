@@ -4,10 +4,10 @@ import 'package:responsive_builder/responsive_builder.dart';
 
 import 'widget/card_link_social.dart';
 
-class HomePage extends StatelessWidget {
+class HomePageScreen extends StatelessWidget {
   final String title;
 
-  const HomePage({
+  const HomePageScreen({
     Key? key,
     required this.title,
   }) : super(key: key);
