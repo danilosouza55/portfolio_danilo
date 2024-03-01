@@ -1,13 +1,5 @@
 # Stage 1 - Install dependencies and build the app in a build environment
-FROM ubuntu:22.04 AS build-env
-
-# Install necessary dependencies
-RUN apt-get update && apt-get install -y curl git unzip xz-utils zip libglu1-mesa
-
-# Download and install Flutter SDK
-RUN git clone https://github.com/flutter/flutter.git /usr/local/flutter
-ENV PATH="/usr/local/flutter/bin:${PATH}"
-RUN flutter precache
+FROM danilo55555/flutter-sdk:3.19.2 AS build-env
 
 # Copy pubspec.yaml and fetch dependencies
 COPY pubspec.yaml /app/
