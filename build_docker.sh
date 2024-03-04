@@ -1,0 +1,2 @@
+docker buildx build --platform linux/amd64,linux/arm64/v8 -t danilo55555/website_portfolio:3.0 --push .
+docker buildx build --platform linux/amd64,linux/arm64/v8 -t danilo55555/website_portfolio:latest --push .
