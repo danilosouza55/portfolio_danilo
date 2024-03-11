@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "938690782201",
+    "project_id": "portfolio-danilo-8a975",
+    "storage_bucket": "portfolio-danilo-8a975.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:938690782201:android:1b4c84e18c4769cc041328",
+        "android_client_info": {
+          "package_name": "br.dev.danilosouza.portfolio_danilo"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDNrNUQPbQoDYbRJCPLdLXtlKwA8KDR2c8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
