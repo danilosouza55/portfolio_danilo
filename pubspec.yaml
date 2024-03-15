@@ -1,8 +1,8 @@
 name: portfolio_danilo
-description: "A new Flutter project."
+description: "Meu portfolio"
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 
-version: 3.1.0+6
+version: 3.2.0+7
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
