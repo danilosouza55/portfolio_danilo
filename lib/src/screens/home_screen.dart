@@ -20,7 +20,10 @@ class HomePageScreen extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
-            colors: [Colors.lightBlueAccent, Colors.green],
+            colors: [
+              Color.fromARGB(255, 77, 64, 255),
+              Color.fromARGB(255, 170, 122, 18)
+            ],
           ),
         ),
         padding: const EdgeInsets.only(top: 16, bottom: 16),
@@ -31,10 +34,14 @@ class HomePageScreen extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisSize: MainAxisSize.max,
             children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Image.asset("assets/img/logo.png"),
+              ),
               const Text(
-                'Danilo Araújo de Souza',
+                'Hi my name is Danilo Araújo de Souza',
                 style: TextStyle(
-                  fontSize: 30,
+                  fontSize: 25,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
                 ),
@@ -42,7 +49,7 @@ class HomePageScreen extends StatelessWidget {
               ),
               const SizedBox(height: 30),
               const Text(
-                'Seja bem vindo!',
+                "I'm a software developer",
                 style: TextStyle(
                   fontSize: 30,
                   color: Colors.white,
