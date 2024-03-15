@@ -1,16 +1,38 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:portfolio_danilo/src/core/ui/landing_page_icons_icons.dart';
 import 'package:responsive_builder/responsive_builder.dart';
 
 import 'widget/card_link_social.dart';
 
-class HomePageScreen extends StatelessWidget {
+class HomePageScreen extends StatefulWidget {
   final String title;
 
   const HomePageScreen({
     Key? key,
     required this.title,
   }) : super(key: key);
+
+  @override
+  State<HomePageScreen> createState() => _HomePageScreenState();
+}
+
+class _HomePageScreenState extends State<HomePageScreen> {
+  String version = 'v0.0.0';
+
+  @override
+  void initState() {
+    getVersion();
+
+    super.initState();
+  }
+
+  getVersion() async {
+    final packageInfo = await PackageInfo.fromPlatform();
+    setState(() {
+      version = 'v${packageInfo.version}';
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -126,6 +148,15 @@ class HomePageScreen extends StatelessWidget {
                     );
                   }
                 },
+              ),
+              const SizedBox(height: 30),
+              Text(
+                version,
+                style: const TextStyle(
+                  fontSize: 12,
+                  color: Colors.black,
+                ),
+                textAlign: TextAlign.center,
               ),
             ],
           ),
