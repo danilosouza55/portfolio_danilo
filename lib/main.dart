@@ -13,13 +13,13 @@ void main() async {
   final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   FirebaseAnalyticsObserver(analytics: analytics);
 
-  // await FirebaseAnalytics.instance.logBeginCheckout(
-  //     value: 10.0,
-  //     currency: 'USD',
-  //     items: [
-  //       AnalyticsEventItem(itemName: 'Socks', itemId: 'xjw73ndnw', price: 10.0),
-  //     ],
-  //     coupon: '10PERCENTOFF');
+  await FirebaseAnalytics.instance.logBeginCheckout(
+      value: 10.0,
+      currency: 'USD',
+      items: [
+        AnalyticsEventItem(itemName: 'Socks', itemId: 'xjw73ndnw', price: 10.0),
+      ],
+      coupon: '10PERCENTOFF');
 
   runApp(const AppWidget());
 }
