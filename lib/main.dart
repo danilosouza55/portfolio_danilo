@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/material.dart';
 import 'package:portfolio_danilo/src/app_widget.dart';
@@ -7,19 +9,22 @@ import 'firebase_options.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
-  final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
-  FirebaseAnalyticsObserver(analytics: analytics);
+  if (!Platform.isLinux) {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    final FirebaseAnalytics analytics = FirebaseAnalytics.instance;
+    FirebaseAnalyticsObserver(analytics: analytics);
 
-  await FirebaseAnalytics.instance.logBeginCheckout(
-      value: 10.0,
-      currency: 'USD',
-      items: [
-        AnalyticsEventItem(itemName: 'Socks', itemId: 'xjw73ndnw', price: 10.0),
-      ],
-      coupon: '10PERCENTOFF');
+    await FirebaseAnalytics.instance.logBeginCheckout(
+        value: 10.0,
+        currency: 'USD',
+        items: [
+          AnalyticsEventItem(
+              itemName: 'Socks', itemId: 'xjw73ndnw', price: 10.0),
+        ],
+        coupon: '10PERCENTOFF');
+  }
 
   runApp(const AppWidget());
 }
