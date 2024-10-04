@@ -3,7 +3,7 @@
 
 ## Projeto em Flutter Web/Android
 
-Para executar o projeto instale o Flutter 3.10 ou superior
+Para executar o projeto instale o Flutter 3.24 ou superior
 
 O projeto pode ser executado nativamente ou usando docker.
 
