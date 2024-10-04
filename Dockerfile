@@ -1,5 +1,5 @@
 # Stage 1 - Install dependencies and build the app in a build environment
-FROM danilo55555/flutter-sdk:3.19.2 AS build-env
+FROM danilo55555/flutter-sdk:3.24.1 AS build-env
 
 # Copy pubspec.yaml and fetch dependencies
 COPY pubspec.yaml /app/
