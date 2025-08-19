@@ -6,11 +6,7 @@ class GradientBorderPainter extends CustomPainter {
     final rect = Offset.zero & size;
     final Paint paint = Paint()
       ..shader = const SweepGradient(
-        colors: [
-          Color(0xFF8E24AA), // Roxo escuro
-          Color(0xFFBA68C8), // Roxo claro
-          Color(0xFF8E24AA), // Roxo escuro
-        ],
+        colors: [],
         stops: [0.0, 0.5, 1.0],
       ).createShader(rect)
       ..style = PaintingStyle.stroke
