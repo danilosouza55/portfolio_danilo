@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'dart:ui';
 
 class ModernMenu extends StatelessWidget {
   final String name;
@@ -37,7 +36,7 @@ class ModernMenu extends StatelessWidget {
     if (isMobile) {
       return Drawer(
         child: Container(
-          decoration: BoxDecoration(gradient: gradient),
+          decoration: const BoxDecoration(gradient: gradient),
           child: ListView(
             padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
             children: [

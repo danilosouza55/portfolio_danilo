@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 
-class PoliticaPrivacidadeScreen extends StatelessWidget {
-  const PoliticaPrivacidadeScreen({super.key});
+class PoliticaPrivacidadePage extends StatelessWidget {
+  const PoliticaPrivacidadePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Política de privacidade'),
-      ),
-      body: const SingleChildScrollView(
+    return Container(
+      child: const SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Text("""
 Privacy Policy
