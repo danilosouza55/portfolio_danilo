@@ -77,14 +77,17 @@ class _HomePageScreenState extends State<HomePageScreen> {
       body: Container(
         width: double.infinity,
         height: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           gradient: LinearGradient(
-            begin: Alignment.topRight,
-            end: Alignment.bottomLeft,
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
             colors: [
-              Theme.of(context).primaryColor,
-              Theme.of(context).colorScheme.secondary,
+              Color(0xFF0F2027), // azul escuro
+              Color(0xFF2C5364), // azul
+              Color(0xFF6A82FB), // azul claro
+              Color(0xFFB06AB3), // roxo
             ],
+            stops: [0.0, 0.4, 0.7, 1.0],
           ),
         ),
         child: Center(

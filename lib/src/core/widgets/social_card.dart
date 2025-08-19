@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:portfolio_danilo/src/core/widgets/gradient_border_painter.dart';
 
 class SocialCard extends StatefulWidget {
   final String title;
@@ -85,35 +86,59 @@ class _SocialCardState extends State<SocialCard>
                 child: Container(
                   width: widget.size,
                   height: widget.size,
-                  decoration: BoxDecoration(
-                    color: isHovered
-                        ? Theme.of(context).primaryColor
-                        : Colors.transparent,
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
-                    border: Border.all(
-                      color: Theme.of(context).primaryColor,
-                      width: 2,
-                    ),
-                    boxShadow: isHovered
-                        ? [
-                            BoxShadow(
-                              color: Theme.of(context)
-                                  .primaryColor
-                                  .withOpacity(0.3),
-                              blurRadius: 12,
-                              spreadRadius: 4,
-                            ),
-                          ]
-                        : [],
                   ),
-                  child: AnimatedSwitcher(
-                    duration: const Duration(milliseconds: 200),
-                    child: Icon(
-                      widget.icon,
-                      size: widget.size * 0.5,
-                      color: isHovered
-                          ? Colors.white
-                          : Theme.of(context).primaryColor,
+                  child: CustomPaint(
+                    painter: GradientBorderPainter(),
+                    child: Center(
+                      child: Container(
+                        width: widget.size - 8,
+                        height: widget.size - 8,
+                        decoration: BoxDecoration(
+                          color: isHovered
+                              ? Theme.of(context).primaryColor
+                              : Colors.white.withOpacity(0.85),
+                          shape: BoxShape.circle,
+                          boxShadow: isHovered
+                              ? [
+                                  BoxShadow(
+                                    color: Theme.of(context)
+                                        .primaryColor
+                                        .withOpacity(0.3),
+                                    blurRadius: 12,
+                                    spreadRadius: 4,
+                                  ),
+                                ]
+                              : [],
+                        ),
+                        child: AnimatedSwitcher(
+                          duration: const Duration(milliseconds: 200),
+                          child: isHovered
+                              ? Icon(
+                                  widget.icon,
+                                  size: (widget.size - 8) * 0.5,
+                                  color: Colors.white,
+                                )
+                              : ShaderMask(
+                                  shaderCallback: (Rect bounds) {
+                                    return const LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color.fromARGB(255, 152, 1, 240),
+                                        Color.fromARGB(255, 72, 48, 138),
+                                      ],
+                                    ).createShader(bounds);
+                                  },
+                                  child: Icon(
+                                    widget.icon,
+                                    size: (widget.size - 8) * 0.5,
+                                    color: Colors.white,
+                                  ),
+                                ),
+                        ),
+                      ),
                     ),
                   ),
                 ),
