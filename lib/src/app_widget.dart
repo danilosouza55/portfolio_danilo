@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:portfolio_danilo/src/core/ui/app_config_ui.dart';
+import 'package:portfolio_danilo/src/core/theme/app_theme.dart';
 import 'package:portfolio_danilo/src/screens/home_screen.dart';
 import 'package:portfolio_danilo/src/screens/politica_privacidade_screen.dart';
 
@@ -10,7 +10,8 @@ class AppWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Danilo A. Souza',
-      theme: AppConfigUi.theme,
+      theme: AppTheme.darkTheme,
+      debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
         '/': (_) => const HomePageScreen(title: 'Home Page'),

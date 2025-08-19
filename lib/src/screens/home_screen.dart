@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:portfolio_danilo/src/core/ui/landing_page_icons_icons.dart';
+import 'package:portfolio_danilo/src/core/widgets/social_card.dart';
+import 'package:portfolio_danilo/src/screens/sections/hero_section.dart';
 import 'package:responsive_builder/responsive_builder.dart';
-
-import 'widget/card_link_social.dart';
 
 class HomePageScreen extends StatefulWidget {
   final String title;
@@ -23,142 +24,147 @@ class _HomePageScreenState extends State<HomePageScreen> {
   @override
   void initState() {
     getVersion();
-
     super.initState();
   }
 
-  getVersion() async {
+  Future<void> getVersion() async {
     final packageInfo = await PackageInfo.fromPlatform();
     setState(() {
       version = 'v${packageInfo.version}';
     });
   }
 
+  List<Widget> _buildSocialCards({bool fullWidth = false}) {
+    final double iconSize = fullWidth ? 70 : 60;
+    final double spacing = fullWidth ? 8 : 12;
+
+    return [
+      SocialCard(
+        title: 'GITHUB',
+        icon: LandingPageIcons.github,
+        size: iconSize,
+        link: 'https://github.com/danilosouza55',
+      ),
+      SizedBox(height: fullWidth ? spacing : 0, width: fullWidth ? 0 : spacing),
+      SocialCard(
+        title: 'LINKEDIN',
+        icon: LandingPageIcons.linkedin,
+        size: iconSize,
+        link: 'https://www.linkedin.com/in/danilo-araujo-de-souza-14005843/',
+      ),
+      SizedBox(height: fullWidth ? spacing : 0, width: fullWidth ? 0 : spacing),
+      SocialCard(
+        title: 'INSTAGRAM',
+        icon: LandingPageIcons.instagram,
+        size: iconSize,
+        link: 'https://www.instagram.com/danilo_asouza',
+      ),
+      SizedBox(height: fullWidth ? spacing : 0, width: fullWidth ? 0 : spacing),
+      SocialCard(
+        title: 'TWITTER',
+        icon: LandingPageIcons.twitter,
+        size: iconSize,
+        link: 'https://twitter.com/danilo_asouza',
+      ),
+    ];
+  }
+
+  // Removido PageController e scrollOffset, pois não haverá mais PageView
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
           gradient: LinearGradient(
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color.fromARGB(255, 77, 64, 255),
-              Color.fromARGB(255, 170, 122, 18)
+              Theme.of(context).primaryColor,
+              Theme.of(context).colorScheme.secondary,
             ],
           ),
         ),
-        padding: const EdgeInsets.only(top: 16, bottom: 16),
-        alignment: Alignment.center,
-        child: SingleChildScrollView(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            mainAxisSize: MainAxisSize.max,
-            children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Image.asset("assets/img/logo.png"),
-              ),
-              const Text(
-                'Hi my name is Danilo Araújo de Souza',
-                style: TextStyle(
-                  fontSize: 25,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+        child: Center(
+          child: SingleChildScrollView(
+            physics: const BouncingScrollPhysics(),
+            child: Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
+              child: ConstrainedBox(
+                constraints: const BoxConstraints(
+                  maxWidth: 900,
                 ),
-                textAlign: TextAlign.center,
-              ),
-              const SizedBox(height: 30),
-              const Text(
-                "I'm a software developer",
-                style: TextStyle(
-                  fontSize: 30,
-                  color: Colors.white,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    const HeroSection(),
+                    const SizedBox(height: 32),
+                    ResponsiveBuilder(
+                      builder: (context, sizingInformation) {
+                        final isSmallScreen =
+                            sizingInformation.screenSize.width <=
+                                const RefinedBreakpoints().tabletSmall;
+                        final socialCards =
+                            _buildSocialCards(fullWidth: isSmallScreen);
+                        return AnimationLimiter(
+                          child: isSmallScreen
+                              ? Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: List.generate(
+                                    socialCards.length,
+                                    (index) =>
+                                        AnimationConfiguration.staggeredList(
+                                      position: index,
+                                      duration:
+                                          const Duration(milliseconds: 600),
+                                      child: SlideAnimation(
+                                        horizontalOffset: 50.0,
+                                        child: FadeInAnimation(
+                                          child: socialCards[index],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                )
+                              : Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 8,
+                                  runSpacing: 8,
+                                  children: List.generate(
+                                    socialCards.length,
+                                    (index) =>
+                                        AnimationConfiguration.staggeredGrid(
+                                      columnCount: 4,
+                                      position: index,
+                                      duration:
+                                          const Duration(milliseconds: 600),
+                                      child: SlideAnimation(
+                                        horizontalOffset: 50.0,
+                                        child: FadeInAnimation(
+                                          child: socialCards[index],
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        );
+                      },
+                    ),
+                    const SizedBox(height: 32),
+                    Text(
+                      version,
+                      style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                            color: Colors.white70,
+                          ),
+                    ),
+                  ],
                 ),
-                textAlign: TextAlign.center,
               ),
-              const SizedBox(height: 30),
-              ResponsiveBuilder(
-                builder: (context, sizingInformation) {
-                  double screenWidth = sizingInformation.screenSize.width;
-                  if (screenWidth <= const RefinedBreakpoints().tabletSmall) {
-                    return const Padding(
-                      padding: EdgeInsets.all(8.0),
-                      child: Column(
-                        children: [
-                          CardLinkSocialWidget(
-                            title: 'GITHUB',
-                            icon: LandingPageIcons.github,
-                            width: double.infinity,
-                            link: 'https://github.com/danilosouza55',
-                          ),
-                          SizedBox(height: 10),
-                          CardLinkSocialWidget(
-                            title: 'LINKEDIN',
-                            icon: LandingPageIcons.linkedin,
-                            width: double.infinity,
-                            link:
-                                'https://linkedin.com/in/danilo-araújo-de-souza-081b7398',
-                          ),
-                          SizedBox(height: 10),
-                          CardLinkSocialWidget(
-                            title: 'INSTAGRAM',
-                            icon: LandingPageIcons.instagram,
-                            width: double.infinity,
-                            link: 'https://www.instagram.com/danilo_asouza',
-                          ),
-                          SizedBox(height: 10),
-                          CardLinkSocialWidget(
-                            title: 'TWITTER',
-                            icon: LandingPageIcons.twitter,
-                            width: double.infinity,
-                            link: 'https://twitter.com/danilo_asouza',
-                          ),
-                        ],
-                      ),
-                    );
-                  } else {
-                    return const Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        CardLinkSocialWidget(
-                          title: 'GITHUB',
-                          icon: LandingPageIcons.github,
-                          link: 'https://github.com/danilosouza55',
-                        ),
-                        CardLinkSocialWidget(
-                          title: 'LINKEDIN',
-                          icon: LandingPageIcons.linkedin,
-                          link:
-                              'https://linkedin.com/in/danilo-araújo-de-souza-081b7398',
-                        ),
-                        CardLinkSocialWidget(
-                          title: 'INSTAGRAM',
-                          icon: LandingPageIcons.instagram,
-                          link: 'https://www.instagram.com/danilo_asouza',
-                        ),
-                        CardLinkSocialWidget(
-                          title: 'TWITTER',
-                          icon: LandingPageIcons.twitter,
-                          link: 'https://twitter.com/danilo_asouza',
-                        ),
-                      ],
-                    );
-                  }
-                },
-              ),
-              const SizedBox(height: 30),
-              Text(
-                version,
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.black,
-                ),
-                textAlign: TextAlign.center,
-              ),
-            ],
+            ),
           ),
         ),
       ),
