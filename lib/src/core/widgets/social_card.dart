@@ -91,7 +91,7 @@ class _SocialCardState extends State<SocialCard>
                         : Colors.transparent,
                     shape: BoxShape.circle,
                     border: Border.all(
-                      color: Theme.of(context).primaryColorDark,
+                      color: const Color.fromARGB(255, 241, 125, 252),
                       width: 2,
                     ),
                     boxShadow: isHovered
@@ -111,7 +111,7 @@ class _SocialCardState extends State<SocialCard>
                       size: widget.size * 0.5,
                       color: isHovered
                           ? Colors.white
-                          : Theme.of(context).primaryColorDark,
+                          : const Color.fromARGB(255, 236, 236, 236),
                     ),
                   ),
                 ),

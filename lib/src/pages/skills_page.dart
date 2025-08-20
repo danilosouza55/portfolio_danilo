@@ -38,12 +38,39 @@ class SkillsPage extends StatelessWidget {
                   const SizedBox(height: 16),
                   const Wrap(
                     spacing: 12,
+                    runSpacing: 10,
+                    alignment: WrapAlignment.center,
                     children: [
+                      // Linguagens
                       Chip(label: Text('Flutter')),
                       Chip(label: Text('Dart')),
+                      Chip(label: Text('C#')),
+                      Chip(label: Text('.NET')),
+                      Chip(label: Text('PHP')),
+                      Chip(label: Text('JavaScript')),
+
+                      // Banco de Dados
+                      Chip(label: Text('MySQL')),
+                      Chip(label: Text('PostgreSQL')),
+                      Chip(label: Text('SQLite')),
                       Chip(label: Text('Firebase')),
+
+                      // Ferramentas
                       Chip(label: Text('Git')),
+                      Chip(label: Text('Docker')),
+                      Chip(label: Text('CI/CD')),
+                      Chip(label: Text('Linux')),
+
+                      // Metodologias / Gestão
+                      Chip(label: Text('Scrum')),
+                      Chip(label: Text('Kanban')),
+                      Chip(label: Text('DevOps')),
+
+                      // Outras áreas
                       Chip(label: Text('UI/UX')),
+                      Chip(label: Text('Design Patterns')),
+                      Chip(label: Text('Arquitetura de Software')),
+                      Chip(label: Text('Gestão de Projetos')),
                     ],
                   ),
                 ],
