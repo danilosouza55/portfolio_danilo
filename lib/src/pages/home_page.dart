@@ -50,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         title: 'LINKEDIN',
         icon: LandingPageIcons.linkedin,
         size: iconSize,
-        link: 'www.linkedin.com/in/danilo-araújo-de-souza-081b7398/',
+        link: 'https://linkedin.com/in/danilo-araújo-de-souza-081b7398',
       ),
       SizedBox(height: fullWidth ? spacing : 0, width: fullWidth ? 0 : spacing),
       SocialCard(
