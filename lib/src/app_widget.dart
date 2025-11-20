@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 import 'package:portfolio_danilo/src/core/theme/app_theme.dart';
+import 'package:portfolio_danilo/src/core/theme/app_colors.dart';
 import 'package:portfolio_danilo/src/pages/home_page.dart';
 import 'package:portfolio_danilo/src/pages/contact_page.dart';
 import 'package:portfolio_danilo/src/pages/politica_privacidade_page.dart';
@@ -41,6 +43,35 @@ class _ModernAppState extends State<ModernApp> {
     setState(() {
       _selectedIndex = index;
     });
+  }
+
+  Widget _buildFooter() {
+    return FutureBuilder<PackageInfo>(
+      future: PackageInfo.fromPlatform(),
+      builder: (context, snapshot) {
+        final version = snapshot.data?.version ?? 'v0.0.0';
+        return Container(
+          padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 24),
+          decoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                color: AppColors.primary.withValues(alpha: 0.2),
+                width: 1,
+              ),
+            ),
+            color: AppColors.darkBg.withValues(alpha: 0.5),
+          ),
+          child: Center(
+            child: Text(
+              'Portfólio v$version © 2025 Danilo A. Souza',
+              style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                    color: AppColors.textSecondary,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -108,9 +139,16 @@ class _ModernAppState extends State<ModernApp> {
               flexibleSpace: menu,
             ),
       drawer: isMobile ? menu : null,
-      body: AnimatedSwitcher(
-        duration: const Duration(milliseconds: 300),
-        child: _pages[_selectedIndex],
+      body: Column(
+        children: [
+          Expanded(
+            child: AnimatedSwitcher(
+              duration: const Duration(milliseconds: 300),
+              child: _pages[_selectedIndex],
+            ),
+          ),
+          _buildFooter(),
+        ],
       ),
     );
   }

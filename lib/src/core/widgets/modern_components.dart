@@ -109,17 +109,17 @@ class GlassCard extends StatelessWidget {
         height: height,
         padding: padding,
         decoration: BoxDecoration(
-          color: AppColors.darkCard.withOpacity(0.7),
+          color: AppColors.darkCard.withValues(alpha: 0.7),
           borderRadius: BorderRadius.circular(borderRadius),
           border: hasBorder
               ? Border.all(
-                  color: AppColors.border.withOpacity(0.5),
+                  color: AppColors.border.withValues(alpha: 0.5),
                   width: 1.5,
                 )
               : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.2),
+              color: Colors.black.withValues(alpha: 0.2),
               blurRadius: 20,
               spreadRadius: 0,
               offset: const Offset(0, 8),
@@ -167,7 +167,7 @@ class GradientCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withOpacity(0.3),
+              color: Colors.black.withValues(alpha: 0.3),
               blurRadius: 24,
               spreadRadius: 0,
               offset: const Offset(0, 12),
@@ -273,8 +273,10 @@ class ModernChip extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bgColor = backgroundColor ?? (selected ? AppColors.primary : AppColors.darkCard);
-    final fgColor = foregroundColor ?? (selected ? Colors.white : AppColors.textSecondary);
+    final bgColor =
+        backgroundColor ?? (selected ? AppColors.primary : AppColors.darkCard);
+    final fgColor =
+        foregroundColor ?? (selected ? Colors.white : AppColors.textSecondary);
 
     return InkWell(
       onTap: onTap,
@@ -342,7 +344,7 @@ class GradientText extends StatelessWidget {
 }
 
 /// Ícone com fundo arredondado
-class IconBox extends StatelessWidget {
+class IconBox extends StatefulWidget {
   final IconData icon;
   final Color? backgroundColor;
   final Color? iconColor;
@@ -361,27 +363,67 @@ class IconBox extends StatelessWidget {
   }) : super(key: key);
 
   @override
-  Widget build(BuildContext context) {
-    final boxSize = size ?? 48;
+  State<IconBox> createState() => _IconBoxState();
+}
 
-    return InkWell(
-      onTap: onTap,
-      borderRadius: BorderRadius.circular(12),
-      child: Container(
-        width: boxSize,
-        height: boxSize,
-        decoration: BoxDecoration(
-          color: backgroundColor ?? AppColors.darkCard,
-          borderRadius: BorderRadius.circular(12),
-          border: Border.all(
-            color: AppColors.border.withOpacity(0.5),
-            width: 1,
+class _IconBoxState extends State<IconBox> with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _scaleAnimation;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = AnimationController(
+      duration: const Duration(milliseconds: 200),
+      vsync: this,
+    );
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final boxSize = widget.size ?? 48;
+
+    return MouseRegion(
+      onEnter: (_) => _controller.forward(),
+      onExit: (_) => _controller.reverse(),
+      child: ScaleTransition(
+        scale: _scaleAnimation,
+        child: GestureDetector(
+          onTap: widget.onTap,
+          child: Container(
+            width: boxSize,
+            height: boxSize,
+            decoration: BoxDecoration(
+              color: widget.backgroundColor ?? AppColors.darkCard,
+              borderRadius: BorderRadius.circular(12),
+              border: Border.all(
+                color: AppColors.border.withValues(alpha: 0.5),
+                width: 1.5,
+              ),
+              boxShadow: [
+                BoxShadow(
+                  color: (widget.iconColor ?? AppColors.primary)
+                      .withValues(alpha: 0.2),
+                  blurRadius: 12,
+                  spreadRadius: 0,
+                ),
+              ],
+            ),
+            child: Icon(
+              widget.icon,
+              size: widget.iconSize,
+              color: widget.iconColor ?? AppColors.primary,
+            ),
           ),
-        ),
-        child: Icon(
-          icon,
-          size: iconSize,
-          color: iconColor ?? AppColors.primary,
         ),
       ),
     );

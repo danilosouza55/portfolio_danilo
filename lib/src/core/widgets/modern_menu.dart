@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_danilo/src/core/theme/app_colors.dart';
 
-class ModernMenu extends StatelessWidget {
+class ModernMenu extends StatefulWidget {
   final String name;
   final String role;
   final String profileImage;
@@ -19,145 +20,296 @@ class ModernMenu extends StatelessWidget {
   });
 
   @override
+  State<ModernMenu> createState() => _ModernMenuState();
+}
+
+class _ModernMenuState extends State<ModernMenu>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _animationController;
+
+  @override
+  void initState() {
+    super.initState();
+    _animationController = AnimationController(
+      vsync: this,
+      duration: const Duration(milliseconds: 800),
+    );
+    _animationController.forward();
+  }
+
+  @override
+  void dispose() {
+    _animationController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final isMobile = MediaQuery.of(context).size.width < 700;
-    const gradient = LinearGradient(
-      begin: Alignment.topLeft,
-      end: Alignment.bottomRight,
-      colors: [
-        Color(0xFF667eea),
-        Color(0xFF764ba2),
-      ],
-    );
 
     if (isMobile) {
-      return Drawer(
-        child: Container(
-          decoration: const BoxDecoration(gradient: gradient),
-          child: ListView(
-            padding: const EdgeInsets.symmetric(vertical: 40, horizontal: 24),
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: () => Navigator.of(context).pop(),
-                  tooltip: 'Fechar menu',
-                ),
-              ),
-              AnimatedContainer(
-                duration: const Duration(milliseconds: 600),
-                curve: Curves.easeOutExpo,
-                child: Center(
-                  child: CircleAvatar(
-                    radius: 44,
-                    backgroundImage: AssetImage(profileImage),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 16),
-              Center(
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 400),
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [Shadow(blurRadius: 8, color: Colors.black45)],
-                  ),
-                  child: Text(name),
-                ),
-              ),
-              Center(
-                child: AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 400),
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.white70,
-                  ),
-                  child: Text(role),
-                ),
-              ),
-              const SizedBox(height: 28),
-              ...navItems.map((item) => Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 6),
-                    child: AnimatedMenuItem(child: item),
-                  )),
-              const SizedBox(height: 32),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: socialIcons
-                    .map((icon) => AnimatedSocialIcon(child: icon))
-                    .toList(),
-              ),
+      return _buildMobileMenu();
+    } else {
+      return _buildDesktopMenu();
+    }
+  }
+
+  Widget _buildMobileMenu() {
+    return Drawer(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+            colors: [
+              AppColors.darkBg,
+              AppColors.darkBg.withOpacity(0.8),
             ],
           ),
         ),
-      );
-    } else {
-      return Container(
-        height: 84,
-        decoration: const BoxDecoration(
-          gradient: gradient,
-        ),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.center,
+        child: ListView(
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 24),
           children: [
-            const SizedBox(width: 32),
-            AnimatedContainer(
-              duration: const Duration(milliseconds: 600),
-              curve: Curves.easeOutExpo,
-              child: CircleAvatar(
-                radius: 32,
-                backgroundImage: AssetImage(profileImage),
+            // Close Button
+            Align(
+              alignment: Alignment.topRight,
+              child: IconButton(
+                icon: Icon(Icons.close, color: AppColors.textPrimary),
+                onPressed: () => Navigator.of(context).pop(),
+                tooltip: 'Fechar menu',
               ),
             ),
-            const SizedBox(width: 20),
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 400),
-                  style: const TextStyle(
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
-                    shadows: [Shadow(blurRadius: 8, color: Colors.black45)],
-                  ),
-                  child: Text(name),
+            const SizedBox(height: 20),
+
+            // Profile Section
+            SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(-1, 0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(
+                    parent: _animationController, curve: Curves.easeOut),
+              ),
+              child: Center(
+                child: Column(
+                  children: [
+                    // Avatar with Border
+                    Container(
+                      padding: const EdgeInsets.all(3),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                        shape: BoxShape.circle,
+                      ),
+                      child: CircleAvatar(
+                        radius: 48,
+                        backgroundImage: AssetImage(widget.profileImage),
+                      ),
+                    ),
+                    const SizedBox(height: 16),
+                    Text(
+                      widget.name,
+                      style:
+                          Theme.of(context).textTheme.headlineSmall?.copyWith(
+                                fontWeight: FontWeight.bold,
+                                color: AppColors.textPrimary,
+                              ),
+                    ),
+                    const SizedBox(height: 4),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 12,
+                        vertical: 6,
+                      ),
+                      decoration: BoxDecoration(
+                        gradient: AppColors.primaryGradient,
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Text(
+                        widget.role,
+                        style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                      ),
+                    ),
+                  ],
                 ),
-                AnimatedDefaultTextStyle(
-                  duration: const Duration(milliseconds: 400),
-                  style: const TextStyle(
-                    fontSize: 15,
-                    color: Colors.white70,
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Divider
+            Divider(color: AppColors.textSecondary.withOpacity(0.2)),
+            const SizedBox(height: 16),
+
+            // Navigation Items
+            ...List.generate(
+              widget.navItems.length,
+              (index) => SlideTransition(
+                position: Tween<Offset>(
+                  begin: const Offset(-1, 0),
+                  end: Offset.zero,
+                ).animate(
+                  CurvedAnimation(
+                    parent: _animationController,
+                    curve: Interval(
+                      0.2 + (index * 0.1),
+                      0.6 + (index * 0.1),
+                      curve: Curves.easeOut,
+                    ),
                   ),
-                  child: Text(role),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 8),
+                  child: AnimatedMenuItem(child: widget.navItems[index]),
+                ),
+              ),
+            ),
+            const SizedBox(height: 32),
+
+            // Social Icons
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: List.generate(
+                widget.socialIcons.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: AnimatedSocialIcon(child: widget.socialIcons[index]),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildDesktopMenu() {
+    return Container(
+      height: 84,
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            AppColors.darkBg.withOpacity(0.95),
+            AppColors.darkBg.withOpacity(0.85),
+          ],
+        ),
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.primary.withOpacity(0.1),
+            blurRadius: 20,
+            offset: const Offset(0, 4),
+          ),
+        ],
+      ),
+      child: Row(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const SizedBox(width: 32),
+
+          // Profile Section
+          SlideTransition(
+            position: Tween<Offset>(
+              begin: const Offset(-1, 0),
+              end: Offset.zero,
+            ).animate(
+              CurvedAnimation(
+                  parent: _animationController, curve: Curves.easeOut),
+            ),
+            child: Row(
+              children: [
+                // Avatar with Border
+                Container(
+                  padding: const EdgeInsets.all(2),
+                  decoration: BoxDecoration(
+                    gradient: AppColors.primaryGradient,
+                    shape: BoxShape.circle,
+                  ),
+                  child: CircleAvatar(
+                    radius: 32,
+                    backgroundImage: AssetImage(widget.profileImage),
+                  ),
+                ),
+                const SizedBox(width: 16),
+
+                // Name and Role
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      widget.name,
+                      style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                            fontWeight: FontWeight.bold,
+                            color: AppColors.textPrimary,
+                          ),
+                    ),
+                    Text(
+                      widget.role,
+                      style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                            color: AppColors.textSecondary,
+                            fontWeight: FontWeight.w500,
+                          ),
+                    ),
+                  ],
                 ),
               ],
             ),
-            const Spacer(),
-            ...navItems.map((item) => Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: AnimatedMenuItem(child: item),
-                )),
-            const SizedBox(width: 32),
-            Row(
-              children: socialIcons
-                  .map((icon) => AnimatedSocialIcon(child: icon))
-                  .toList(),
+          ),
+
+          const Spacer(),
+
+          // Navigation Items
+          ...List.generate(
+            widget.navItems.length,
+            (index) => SlideTransition(
+              position: Tween<Offset>(
+                begin: const Offset(1, 0),
+                end: Offset.zero,
+              ).animate(
+                CurvedAnimation(
+                  parent: _animationController,
+                  curve: Interval(
+                    0.2 + (index * 0.1),
+                    0.6 + (index * 0.1),
+                    curve: Curves.easeOut,
+                  ),
+                ),
+              ),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 4),
+                child: AnimatedMenuItem(child: widget.navItems[index]),
+              ),
             ),
-            const SizedBox(width: 24),
-          ],
-        ),
-      );
-    }
+          ),
+
+          const SizedBox(width: 32),
+
+          // Social Icons
+          if (widget.socialIcons.isNotEmpty)
+            Row(
+              children: List.generate(
+                widget.socialIcons.length,
+                (index) => Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: AnimatedSocialIcon(child: widget.socialIcons[index]),
+                ),
+              ),
+            ),
+
+          const SizedBox(width: 24),
+        ],
+      ),
+    );
   }
 }
 
+// Animated Menu Item with Enhanced Effects
 class AnimatedMenuItem extends StatefulWidget {
   final Widget child;
+
   const AnimatedMenuItem({required this.child, Key? key}) : super(key: key);
 
   @override
@@ -167,18 +319,25 @@ class AnimatedMenuItem extends StatefulWidget {
 class _AnimatedMenuItemState extends State<AnimatedMenuItem>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scale;
+  late Animation<double> _scaleAnimation;
+  late Animation<Color?> _colorAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 250),
-      lowerBound: 1.0,
-      upperBound: 1.12,
+      duration: const Duration(milliseconds: 300),
     );
-    _scale = _controller.drive(Tween(begin: 1.0, end: 1.12));
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.08).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    _colorAnimation = ColorTween(
+      begin: Colors.transparent,
+      end: AppColors.primary.withOpacity(0.1),
+    ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 
   @override
@@ -192,26 +351,30 @@ class _AnimatedMenuItemState extends State<AnimatedMenuItem>
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
       onExit: (_) => _controller.reverse(),
-      child: ScaleTransition(
-        scale: _scale,
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: _controller.value > 1.0 ? 0.85 : 1.0,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Container(
+            decoration: BoxDecoration(
+              color: _colorAnimation.value,
+              borderRadius: BorderRadius.circular(8),
+            ),
+            child: ScaleTransition(
+              scale: _scaleAnimation,
               child: child,
-            );
-          },
-          child: widget.child,
-        ),
+            ),
+          );
+        },
+        child: widget.child,
       ),
     );
   }
 }
 
+// Animated Social Icon with Enhanced Effects
 class AnimatedSocialIcon extends StatefulWidget {
   final Widget child;
+
   const AnimatedSocialIcon({required this.child, Key? key}) : super(key: key);
 
   @override
@@ -221,18 +384,24 @@ class AnimatedSocialIcon extends StatefulWidget {
 class _AnimatedSocialIconState extends State<AnimatedSocialIcon>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
-  late Animation<double> _scale;
+  late Animation<double> _scaleAnimation;
+  late Animation<double> _rotateAnimation;
 
   @override
   void initState() {
     super.initState();
     _controller = AnimationController(
       vsync: this,
-      duration: const Duration(milliseconds: 250),
-      lowerBound: 1.0,
-      upperBound: 1.18,
+      duration: const Duration(milliseconds: 400),
     );
-    _scale = _controller.drive(Tween(begin: 1.0, end: 1.18));
+
+    _scaleAnimation = Tween<double>(begin: 1.0, end: 1.2).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.elasticOut),
+    );
+
+    _rotateAnimation = Tween<double>(begin: 0, end: 0.1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
+    );
   }
 
   @override
@@ -246,19 +415,18 @@ class _AnimatedSocialIconState extends State<AnimatedSocialIcon>
     return MouseRegion(
       onEnter: (_) => _controller.forward(),
       onExit: (_) => _controller.reverse(),
-      child: ScaleTransition(
-        scale: _scale,
-        child: AnimatedBuilder(
-          animation: _controller,
-          builder: (context, child) {
-            return AnimatedOpacity(
-              duration: const Duration(milliseconds: 250),
-              opacity: _controller.value > 1.0 ? 0.7 : 1.0,
+      child: AnimatedBuilder(
+        animation: _controller,
+        builder: (context, child) {
+          return Transform.rotate(
+            angle: _rotateAnimation.value,
+            child: ScaleTransition(
+              scale: _scaleAnimation,
               child: child,
-            );
-          },
-          child: widget.child,
-        ),
+            ),
+          );
+        },
+        child: widget.child,
       ),
     );
   }
@@ -267,5 +435,6 @@ class _AnimatedSocialIconState extends State<AnimatedSocialIcon>
 class Skill {
   final String name;
   final IconData icon;
+
   Skill({required this.name, required this.icon});
 }

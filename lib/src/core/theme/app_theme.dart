@@ -8,12 +8,12 @@ class AppTheme {
     return ThemeData(
       useMaterial3: true,
       brightness: Brightness.dark,
-      
+
       // Colors
       scaffoldBackgroundColor: AppColors.darkBg,
       canvasColor: AppColors.darkBg,
       cardColor: AppColors.darkCard,
-      
+
       // Primary color scheme
       colorScheme: ColorScheme.dark(
         primary: AppColors.primary,
@@ -23,7 +23,7 @@ class AppTheme {
         surface: AppColors.darkBgSecondary,
         surfaceContainer: AppColors.darkCard,
         error: AppColors.error,
-        errorContainer: AppColors.error.withOpacity(0.1),
+        errorContainer: AppColors.error.withValues(alpha: 0.1),
         brightness: Brightness.dark,
       ),
 
@@ -175,13 +175,14 @@ class AppTheme {
         style: IconButton.styleFrom(
           foregroundColor: AppColors.textSecondary,
           padding: const EdgeInsets.all(8),
-          hoverColor: AppColors.primary.withOpacity(0.1),
+          hoverColor: AppColors.primary.withValues(alpha: 0.1),
         ),
       ),
 
       // Input Decoration Theme
       inputDecorationTheme: InputDecorationTheme(
-        contentPadding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
+        contentPadding:
+            const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
         filled: true,
         fillColor: AppColors.darkCard,
         hintStyle: GoogleFonts.inter(
@@ -237,7 +238,7 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.darkCard,
         selectedColor: AppColors.primary,
-        disabledColor: AppColors.textTertiary.withOpacity(0.3),
+        disabledColor: AppColors.textTertiary.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.inter(
           fontSize: 14,
           color: AppColors.textPrimary,

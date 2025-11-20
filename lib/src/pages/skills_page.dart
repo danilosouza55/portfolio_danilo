@@ -117,7 +117,7 @@ class SkillsPage extends StatelessWidget {
           children: skills
               .map((skill) => ModernChip(
                     label: skill,
-                    backgroundColor: AppColors.primary.withOpacity(0.15),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.15),
                     foregroundColor: AppColors.accent,
                     selected: true,
                   ))

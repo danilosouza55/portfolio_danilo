@@ -27,31 +27,81 @@ class _ContactPageState extends State<ContactPage> {
     super.dispose();
   }
 
-  void _handleSubmit() async {
-    if (_formKey.currentState!.validate()) {
-      setState(() => _isSubmitting = true);
-      
-      // Simulate sending email
-      await Future.delayed(const Duration(seconds: 2));
-      
-      setState(() => _isSubmitting = false);
-      
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: const Text('Mensagem enviada com sucesso!'),
-          backgroundColor: AppColors.success,
-        ),
-      );
-      
-      _nameController.clear();
-      _emailController.clear();
-      _messageController.clear();
+  Future<void> _launchEmail() async {
+    final String subject = 'Contato: ${_nameController.text}';
+    final String body =
+        'Nome: ${_nameController.text}\nEmail: ${_emailController.text}\n\nMensagem:\n${_messageController.text}';
+    final Uri emailUri = Uri(
+      scheme: 'mailto',
+      path: 'danilo.souza@hotmail.com',
+      query:
+          'subject=${Uri.encodeComponent(subject)}&body=${Uri.encodeComponent(body)}',
+    );
+
+    try {
+      if (await canLaunchUrl(emailUri)) {
+        await launchUrl(emailUri);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Não foi possível abrir o cliente de email'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
     }
   }
 
-  void _launchURL(String url) async {
-    if (await canLaunchUrl(Uri.parse(url))) {
-      await launchUrl(Uri.parse(url));
+  Future<void> _launchURL(String url) async {
+    try {
+      if (await canLaunchUrl(Uri.parse(url))) {
+        await launchUrl(Uri.parse(url), mode: LaunchMode.externalApplication);
+      } else {
+        if (mounted) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: const Text('Não foi possível abrir o link'),
+              backgroundColor: AppColors.error,
+            ),
+          );
+        }
+      }
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Erro ao abrir link: $e'),
+            backgroundColor: AppColors.error,
+          ),
+        );
+      }
+    }
+  }
+
+  void _handleSubmit() async {
+    if (_formKey.currentState!.validate()) {
+      setState(() => _isSubmitting = true);
+
+      // Launch email client with pre-filled form data
+      await _launchEmail();
+
+      setState(() => _isSubmitting = false);
+
+      // Clear form after sending
+      _nameController.clear();
+      _emailController.clear();
+      _messageController.clear();
     }
   }
 
@@ -76,7 +126,7 @@ class _ContactPageState extends State<ContactPage> {
                   subtitle: 'Vamos conversar sobre seu próximo projeto',
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Contact Methods and Form
                 if (isMobile) ...[
                   _buildContactForm(context),
@@ -138,7 +188,7 @@ class _ContactPageState extends State<ContactPage> {
                 },
               ),
               const SizedBox(height: 16),
-              
+
               // Email Field
               TextFormField(
                 controller: _emailController,
@@ -158,7 +208,7 @@ class _ContactPageState extends State<ContactPage> {
                 },
               ),
               const SizedBox(height: 16),
-              
+
               // Message Field
               TextFormField(
                 controller: _messageController,
@@ -178,7 +228,7 @@ class _ContactPageState extends State<ContactPage> {
                 },
               ),
               const SizedBox(height: 24),
-              
+
               // Submit Button
               ModernButton(
                 label: _isSubmitting ? 'Enviando...' : 'Enviar Mensagem',
@@ -239,7 +289,8 @@ class _ContactPageState extends State<ContactPage> {
     );
   }
 
-  Widget _buildContactMethodCard(BuildContext context, Map<String, dynamic> method) {
+  Widget _buildContactMethodCard(
+      BuildContext context, Map<String, dynamic> method) {
     return GlassCard(
       onTap: () => _launchURL(method['url']),
       padding: const EdgeInsets.all(16),
@@ -288,4 +339,3 @@ class _ContactPageState extends State<ContactPage> {
     );
   }
 }
-
