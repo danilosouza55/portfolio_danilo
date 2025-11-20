@@ -1,83 +1,235 @@
 import 'package:flutter/material.dart';
+import 'package:portfolio_danilo/src/core/theme/app_colors.dart';
+import 'package:portfolio_danilo/src/core/widgets/modern_components.dart';
+import 'package:responsive_builder/responsive_builder.dart';
 
 class SkillsPage extends StatelessWidget {
   const SkillsPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      height: double.infinity,
-      decoration: const BoxDecoration(
-        gradient: LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Color(0xFF0F2027),
-            Color(0xFF2C5364),
-            Color(0xFF6A82FB),
-            Color(0xFFB06AB3),
-          ],
-          stops: [0.0, 0.4, 0.7, 1.0],
-        ),
-      ),
-      child: Center(
-        child: SingleChildScrollView(
+    return ResponsiveBuilder(
+      builder: (context, sizingInformation) {
+        final isMobile = sizingInformation.isMobile;
+
+        return SingleChildScrollView(
           physics: const BouncingScrollPhysics(),
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 24.0, vertical: 32.0),
-            child: ConstrainedBox(
-              constraints: const BoxConstraints(maxWidth: 900),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('Skills',
-                      style: Theme.of(context).textTheme.headlineMedium),
-                  const SizedBox(height: 16),
-                  const Wrap(
-                    spacing: 12,
-                    runSpacing: 10,
-                    alignment: WrapAlignment.center,
-                    children: [
-                      // Linguagens
-                      Chip(label: Text('Flutter')),
-                      Chip(label: Text('Dart')),
-                      Chip(label: Text('C#')),
-                      Chip(label: Text('.NET')),
-                      Chip(label: Text('PHP')),
-                      Chip(label: Text('JavaScript')),
+            padding: EdgeInsets.symmetric(
+              horizontal: isMobile ? 20 : 40,
+              vertical: isMobile ? 40 : 60,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SectionHeader(
+                  title: 'Minhas Habilidades',
+                  subtitle: 'Tecnologias e ferramentas que domino',
+                ),
+                SizedBox(height: isMobile ? 40 : 60),
+                
+                // Linguagens
+                _buildSkillCategory(
+                  context,
+                  'Linguagens de Programação',
+                  ['Dart', 'Flutter', 'C#', '.NET', 'PHP', 'JavaScript', 'TypeScript', 'SQL'],
+                  Icons.code,
+                  isMobile,
+                ),
+                SizedBox(height: isMobile ? 40 : 60),
+                
+                // Frontend
+                _buildSkillCategory(
+                  context,
+                  'Development Frontend',
+                  ['Flutter', 'Responsive Design', 'Material Design', 'Cupertino', 'Animation', 'State Management'],
+                  Icons.palette,
+                  isMobile,
+                ),
+                SizedBox(height: isMobile ? 40 : 60),
+                
+                // Backend
+                _buildSkillCategory(
+                  context,
+                  'Development Backend',
+                  ['Firebase', 'REST API', 'WebSocket', 'Node.js', 'Express', 'Database Design'],
+                  Icons.storage,
+                  isMobile,
+                ),
+                SizedBox(height: isMobile ? 40 : 60),
+                
+                // Tools
+                _buildSkillCategory(
+                  context,
+                  'Ferramentas & DevOps',
+                  ['Git', 'GitHub', 'Docker', 'VS Code', 'Android Studio', 'Firebase Console', 'CI/CD'],
+                  Icons.build,
+                  isMobile,
+                ),
+                SizedBox(height: isMobile ? 40 : 60),
+                
+                // Soft Skills
+                _buildSoftSkills(context, isMobile),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
 
-                      // Banco de Dados
-                      Chip(label: Text('MySQL')),
-                      Chip(label: Text('PostgreSQL')),
-                      Chip(label: Text('SQLite')),
-                      Chip(label: Text('Firebase')),
+  Widget _buildSkillCategory(
+    BuildContext context,
+    String title,
+    List<String> skills,
+    IconData icon,
+    bool isMobile,
+  ) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: AppColors.primaryGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Icon(icon, color: Colors.white, size: 20),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        Wrap(
+          spacing: isMobile ? 8 : 12,
+          runSpacing: isMobile ? 8 : 12,
+          children: skills
+              .map((skill) => ModernChip(
+                    label: skill,
+                    backgroundColor: AppColors.primary.withOpacity(0.15),
+                    foregroundColor: AppColors.accent,
+                    selected: true,
+                  ))
+              .toList(),
+        ),
+      ],
+    );
+  }
 
-                      // Ferramentas
-                      Chip(label: Text('Git')),
-                      Chip(label: Text('Docker')),
-                      Chip(label: Text('CI/CD')),
-                      Chip(label: Text('Linux')),
+  Widget _buildSoftSkills(BuildContext context, bool isMobile) {
+    final softSkills = [
+      {'title': 'Problem Solving', 'icon': Icons.lightbulb, 'level': 95},
+      {'title': 'Communication', 'icon': Icons.chat, 'level': 88},
+      {'title': 'Leadership', 'icon': Icons.people, 'level': 82},
+      {'title': 'Time Management', 'icon': Icons.schedule, 'level': 90},
+    ];
 
-                      // Metodologias / Gestão
-                      Chip(label: Text('Scrum')),
-                      Chip(label: Text('Kanban')),
-                      Chip(label: Text('DevOps')),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Padding(
+          padding: const EdgeInsets.only(bottom: 20),
+          child: Row(
+            children: [
+              Container(
+                width: 40,
+                height: 40,
+                decoration: BoxDecoration(
+                  gradient: AppColors.accentGradient,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Icon(Icons.star, color: Colors.white, size: 20),
+              ),
+              const SizedBox(width: 16),
+              Text(
+                'Soft Skills',
+                style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ],
+          ),
+        ),
+        GridView.builder(
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: isMobile ? 1 : 2,
+            crossAxisSpacing: isMobile ? 0 : 20,
+            mainAxisSpacing: 20,
+            childAspectRatio: 2.5,
+          ),
+          itemCount: softSkills.length,
+          itemBuilder: (context, index) {
+            final skill = softSkills[index];
+            return _buildSkillProgressCard(
+              context,
+              skill['title'] as String,
+              skill['level'] as int,
+              skill['icon'] as IconData,
+            );
+          },
+        ),
+      ],
+    );
+  }
 
-                      // Outras áreas
-                      Chip(label: Text('UI/UX')),
-                      Chip(label: Text('Design Patterns')),
-                      Chip(label: Text('Arquitetura de Software')),
-                      Chip(label: Text('Gestão de Projetos')),
-                    ],
-                  ),
-                ],
+  Widget _buildSkillProgressCard(
+    BuildContext context,
+    String title,
+    int level,
+    IconData icon,
+  ) {
+    return GlassCard(
+      padding: const EdgeInsets.all(16),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Row(
+            children: [
+              Icon(icon, color: AppColors.accent, size: 20),
+              const SizedBox(width: 12),
+              Text(
+                title,
+                style: Theme.of(context).textTheme.titleSmall?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
+              ),
+              const Spacer(),
+              Text(
+                '$level%',
+                style: Theme.of(context).textTheme.labelSmall?.copyWith(
+                      color: AppColors.accent,
+                      fontWeight: FontWeight.w700,
+                    ),
+              ),
+            ],
+          ),
+          ClipRRect(
+            borderRadius: BorderRadius.circular(4),
+            child: LinearProgressIndicator(
+              value: level / 100,
+              minHeight: 6,
+              backgroundColor: AppColors.darkBgTertiary,
+              valueColor: AlwaysStoppedAnimation<Color>(
+                Color.lerp(AppColors.primary, AppColors.accent, 0.5) ??
+                    AppColors.primary,
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

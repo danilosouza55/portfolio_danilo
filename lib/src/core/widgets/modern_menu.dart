@@ -25,12 +25,9 @@ class ModernMenu extends StatelessWidget {
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
       colors: [
-        Color(0xFF0F2027),
-        Color(0xFF2C5364),
-        Color(0xFF6A82FB),
-        Color(0xFFB06AB3),
+        Color(0xFF667eea),
+        Color(0xFF764ba2),
       ],
-      stops: [0.0, 0.4, 0.7, 1.0],
     );
 
     if (isMobile) {
