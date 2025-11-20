@@ -2,7 +2,7 @@ name: portfolio_danilo
 description: "Portfólio profissional de Danilo A. Souza - Flutter Developer"
 publish_to: 'none'
 
-version: 4.0.0+1
+version: 4.0.0+17
 
 environment:
   sdk: '>=3.2.6 <4.0.0'
