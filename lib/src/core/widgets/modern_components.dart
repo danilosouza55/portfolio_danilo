@@ -109,17 +109,17 @@ class GlassCard extends StatelessWidget {
         height: height,
         padding: padding,
         decoration: BoxDecoration(
-          color: AppColors.darkCard.withValues(alpha: 0.7),
+          color: AppColors.darkCard.withOpacity(0.7),
           borderRadius: BorderRadius.circular(borderRadius),
           border: hasBorder
               ? Border.all(
-                  color: AppColors.border.withValues(alpha: 0.5),
+                  color: AppColors.border.withOpacity(0.5),
                   width: 1.5,
                 )
               : null,
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.2),
+              color: Colors.black.withOpacity(0.2),
               blurRadius: 20,
               spreadRadius: 0,
               offset: const Offset(0, 8),
@@ -167,7 +167,7 @@ class GradientCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius),
           boxShadow: [
             BoxShadow(
-              color: Colors.black.withValues(alpha: 0.3),
+              color: Colors.black.withOpacity(0.3),
               blurRadius: 24,
               spreadRadius: 0,
               offset: const Offset(0, 12),
@@ -406,13 +406,13 @@ class _IconBoxState extends State<IconBox> with SingleTickerProviderStateMixin {
               color: widget.backgroundColor ?? AppColors.darkCard,
               borderRadius: BorderRadius.circular(12),
               border: Border.all(
-                color: AppColors.border.withValues(alpha: 0.5),
+                color: AppColors.border.withOpacity(0.5),
                 width: 1.5,
               ),
               boxShadow: [
                 BoxShadow(
                   color: (widget.iconColor ?? AppColors.primary)
-                      .withValues(alpha: 0.2),
+                      .withOpacity(0.2),
                   blurRadius: 12,
                   spreadRadius: 0,
                 ),

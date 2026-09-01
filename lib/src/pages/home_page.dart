@@ -308,7 +308,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              (project['color'] as Color).withValues(alpha: 0.15),
+              (project['color'] as Color).withOpacity(0.15),
               AppColors.darkBgTertiary,
             ],
           ),
@@ -323,7 +323,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                   gradient: LinearGradient(
                     colors: [
                       (project['color'] as Color),
-                      (project['color'] as Color).withValues(alpha: 0.7),
+                      (project['color'] as Color).withOpacity(0.7),
                     ],
                   ),
                   borderRadius: BorderRadius.circular(12),
@@ -354,7 +354,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                     .map((tech) => ModernChip(
                           label: tech,
                           backgroundColor: (project['color'] as Color)
-                              .withValues(alpha: 0.2),
+                              .withOpacity(0.2),
                           foregroundColor: project['color'] as Color,
                         ))
                     .toList(),
@@ -469,7 +469,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Text(
             'Conecte-se comigo pelas redes sociais ou envie uma mensagem direta',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white.withValues(alpha: 0.9),
+                  color: Colors.white.withOpacity(0.9),
                   height: 1.6,
                 ),
             textAlign: TextAlign.center,
