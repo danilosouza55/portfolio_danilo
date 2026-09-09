@@ -55,18 +55,18 @@ class _ModernAppState extends State<ModernApp> {
           decoration: BoxDecoration(
             border: Border(
               top: BorderSide(
-                color: AppColors.primary.withOpacity(0.2),
+                color: AppColors.primary.withValues(alpha: 0.2),
                 width: 1,
               ),
             ),
-            color: AppColors.darkBg.withOpacity(0.5),
+            color: AppColors.darkBg.withValues(alpha: 0.5),
           ),
           child: Center(
             child: Text(
               'Portfólio v$version © 2025 Danilo A. Souza',
               style: Theme.of(context).textTheme.labelSmall?.copyWith(
                     color: AppColors.textSecondary,
-              ),
+                  ),
             ),
           ),
         );

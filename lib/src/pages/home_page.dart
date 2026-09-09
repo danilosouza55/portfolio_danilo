@@ -98,11 +98,9 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
                 SizedBox(height: isMobile ? 60 : 80),
 
                 // Featured Projects
-                // _buildFeaturedProjects(context, isMobile),
                 // SizedBox(height: isMobile ? 60 : 80),
 
                 // About Section
-                // _buildAboutSection(context, isMobile),
                 // SizedBox(height: isMobile ? 60 : 80),
 
                 // CTA Section
@@ -235,222 +233,6 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
     );
   }
 
-  Widget _buildFeaturedProjects(BuildContext context, bool isMobile) {
-    final projects = [
-      {
-        'title': 'App de Mobilidade Urbana',
-        'description':
-            'Aplicativo com geolocalização em tempo real, rastreamento de rotas e integração com Google Maps para navegação inteligente.',
-        'tech': ['Flutter', 'Firebase', 'Google Maps', 'Real-time'],
-        'icon': Icons.location_on,
-        'color': const Color(0xFF667eea),
-      },
-      {
-        'title': 'Plataforma E-commerce',
-        'description':
-            'Loja virtual com carrinho de compras, integração de pagamentos seguros via Stripe e sistema de notificações.',
-        'tech': ['Flutter', 'Stripe', 'Node.js', 'REST API'],
-        'icon': Icons.shopping_cart,
-        'color': const Color(0xFF764ba2),
-      },
-      {
-        'title': 'App Social Media',
-        'description':
-            'Rede social com feed dinâmico, notificações em tempo real via WebSocket e compartilhamento de mídia.',
-        'tech': ['Flutter', 'Firebase', 'WebSocket', 'Cloud Storage'],
-        'icon': Icons.share,
-        'color': const Color(0xFFf093fb),
-      },
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionHeader(
-          title: 'Projetos em Destaque',
-          subtitle: 'Trabalhos recentes que demonstram minha expertise',
-        ),
-        const SizedBox(height: 40),
-        GridView.builder(
-          shrinkWrap: true,
-          physics: const NeverScrollableScrollPhysics(),
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: isMobile ? 1 : 3,
-            crossAxisSpacing: isMobile ? 0 : 20,
-            mainAxisSpacing: 20,
-            childAspectRatio: isMobile ? 1 : 1.1,
-          ),
-          itemCount: projects.length,
-          itemBuilder: (context, index) {
-            final project = projects[index];
-            return _buildProjectCard(context, project, isMobile);
-          },
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProjectCard(
-      BuildContext context, Map<String, dynamic> project, bool isMobile) {
-    return MouseRegion(
-      cursor: SystemMouseCursors.click,
-      child: GestureDetector(
-        onTap: () {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text('Projeto: ${project['title']}'),
-              duration: const Duration(seconds: 2),
-            ),
-          );
-        },
-        child: GradientCard(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              (project['color'] as Color).withOpacity(0.15),
-              AppColors.darkBgTertiary,
-            ],
-          ),
-          onTap: () {},
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                width: 56,
-                height: 56,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      (project['color'] as Color),
-                      (project['color'] as Color).withOpacity(0.7),
-                    ],
-                  ),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(project['icon'], color: Colors.white, size: 28),
-              ),
-              SizedBox(height: isMobile ? 20 : 24),
-              Text(
-                project['title'],
-                style: Theme.of(context).textTheme.titleLarge?.copyWith(
-                      fontWeight: FontWeight.w700,
-                    ),
-              ),
-              SizedBox(height: 8),
-              Text(
-                project['description'],
-                style: Theme.of(context).textTheme.bodySmall?.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.6,
-                    ),
-                maxLines: 2,
-                overflow: TextOverflow.ellipsis,
-              ),
-              SizedBox(height: isMobile ? 16 : 20),
-              Wrap(
-                spacing: 8,
-                children: (project['tech'] as List<String>)
-                    .map((tech) => ModernChip(
-                          label: tech,
-                          backgroundColor: (project['color'] as Color)
-                              .withOpacity(0.2),
-                          foregroundColor: project['color'] as Color,
-                        ))
-                    .toList(),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildAboutSection(BuildContext context, bool isMobile) {
-    final skills = [
-      {'skill': 'Desenvolvimento Flutter', 'level': 0.95},
-      {'skill': 'UI/UX Design', 'level': 0.85},
-      {'skill': 'Firebase', 'level': 0.9},
-      {'skill': 'State Management', 'level': 0.88},
-      {'skill': 'API Integration', 'level': 0.92},
-      {'skill': 'Performance', 'level': 0.87},
-    ];
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        SectionHeader(
-          title: 'Sobre Mim',
-          subtitle:
-              'Desenvolvedor apaixonado por criar experiências digitais incríveis',
-        ),
-        const SizedBox(height: 40),
-        GlassCard(
-          padding: EdgeInsets.all(isMobile ? 24 : 32),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Com mais de 5 anos de experiência em desenvolvimento mobile, tenho paixão por criar aplicações que combinam design inovador com funcionalidade robusta.',
-                style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                      color: AppColors.textSecondary,
-                      height: 1.8,
-                    ),
-              ),
-              const SizedBox(height: 32),
-              Text(
-                'Habilidades Principais',
-                style: Theme.of(context).textTheme.titleMedium?.copyWith(
-                      fontWeight: FontWeight.bold,
-                    ),
-              ),
-              const SizedBox(height: 20),
-              ...skills.map((skill) => Padding(
-                    padding: const EdgeInsets.only(bottom: 16),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              skill['skill'].toString(),
-                              style: Theme.of(context).textTheme.labelLarge,
-                            ),
-                            Text(
-                              '${((skill['level'] as double) * 100).toInt()}%',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .labelSmall
-                                  ?.copyWith(
-                                    color: AppColors.accent,
-                                    fontWeight: FontWeight.bold,
-                                  ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(height: 8),
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(4),
-                          child: LinearProgressIndicator(
-                            value: skill['level'] as double,
-                            minHeight: 6,
-                            backgroundColor: AppColors.darkCard,
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              AppColors.primaryGradient.colors.first,
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                  )),
-            ],
-          ),
-        ),
-      ],
-    );
-  }
-
   Widget _buildCTASection(BuildContext context) {
     return GradientCard(
       gradient: AppColors.primaryGradient,
@@ -469,7 +251,7 @@ class _HomePageState extends State<HomePage> with TickerProviderStateMixin {
           Text(
             'Conecte-se comigo pelas redes sociais ou envie uma mensagem direta',
             style: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Colors.white.withValues(alpha: 0.9),
                   height: 1.6,
                 ),
             textAlign: TextAlign.center,

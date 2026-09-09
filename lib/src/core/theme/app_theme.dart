@@ -23,7 +23,7 @@ class AppTheme {
         surface: AppColors.darkBgSecondary,
         surfaceContainer: AppColors.darkCard,
         error: AppColors.error,
-        errorContainer: AppColors.error.withOpacity(0.1),
+        errorContainer: AppColors.error.withValues(alpha: 0.1),
         brightness: Brightness.dark,
       ),
 
@@ -175,7 +175,7 @@ class AppTheme {
         style: IconButton.styleFrom(
           foregroundColor: AppColors.textSecondary,
           padding: const EdgeInsets.all(8),
-          hoverColor: AppColors.primary.withOpacity(0.1),
+          hoverColor: AppColors.primary.withValues(alpha: 0.1),
         ),
       ),
 
@@ -238,7 +238,7 @@ class AppTheme {
       chipTheme: ChipThemeData(
         backgroundColor: AppColors.darkCard,
         selectedColor: AppColors.primary,
-        disabledColor: AppColors.textTertiary.withOpacity(0.3),
+        disabledColor: AppColors.textTertiary.withValues(alpha: 0.3),
         labelStyle: GoogleFonts.inter(
           fontSize: 14,
           color: AppColors.textPrimary,

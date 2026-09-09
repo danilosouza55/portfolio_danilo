@@ -27,47 +27,78 @@ class SkillsPage extends StatelessWidget {
                   subtitle: 'Tecnologias e ferramentas que domino',
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Linguagens
                 _buildSkillCategory(
                   context,
                   'Linguagens de Programação',
-                  ['Dart', 'Flutter', 'C#', '.NET', 'PHP', 'JavaScript', 'TypeScript', 'SQL'],
+                  [
+                    'Dart',
+                    'Flutter',
+                    'C#',
+                    '.NET',
+                    'PHP',
+                    'JavaScript',
+                    'TypeScript',
+                    'SQL'
+                  ],
                   Icons.code,
                   isMobile,
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Frontend
                 _buildSkillCategory(
                   context,
                   'Development Frontend',
-                  ['Flutter', 'Responsive Design', 'Material Design', 'Cupertino', 'Animation', 'State Management'],
+                  [
+                    'Flutter',
+                    'Responsive Design',
+                    'Material Design',
+                    'Cupertino',
+                    'Animation',
+                    'State Management'
+                  ],
                   Icons.palette,
                   isMobile,
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Backend
                 _buildSkillCategory(
                   context,
                   'Development Backend',
-                  ['Firebase', 'REST API', 'WebSocket', 'Node.js', 'Express', 'Database Design'],
+                  [
+                    'Firebase',
+                    'REST API',
+                    'WebSocket',
+                    'Node.js',
+                    'Express',
+                    'Database Design'
+                  ],
                   Icons.storage,
                   isMobile,
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Tools
                 _buildSkillCategory(
                   context,
                   'Ferramentas & DevOps',
-                  ['Git', 'GitHub', 'Docker', 'VS Code', 'Android Studio', 'Firebase Console', 'CI/CD'],
+                  [
+                    'Git',
+                    'GitHub',
+                    'Docker',
+                    'VS Code',
+                    'Android Studio',
+                    'Firebase Console',
+                    'CI/CD'
+                  ],
                   Icons.build,
                   isMobile,
                 ),
                 SizedBox(height: isMobile ? 40 : 60),
-                
+
                 // Soft Skills
                 _buildSoftSkills(context, isMobile),
               ],
@@ -117,7 +148,7 @@ class SkillsPage extends StatelessWidget {
           children: skills
               .map((skill) => ModernChip(
                     label: skill,
-                    backgroundColor: AppColors.primary.withOpacity(0.15),
+                    backgroundColor: AppColors.primary.withValues(alpha: 0.15),
                     foregroundColor: AppColors.accent,
                     selected: true,
                   ))

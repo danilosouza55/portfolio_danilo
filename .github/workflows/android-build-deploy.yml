@@ -8,7 +8,11 @@ on:
       - 'pubspec.yaml'
       - 'lib/**'
       - 'android/**'
+      - '.github/workflows/**'
   workflow_dispatch:
+
+permissions:
+  contents: write
 
 env:
   FLUTTER_VERSION: '3.38.5'
@@ -20,12 +24,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -76,10 +80,10 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v5
         with:
           distribution: 'zulu'
           java-version: '17'
@@ -166,22 +170,20 @@ jobs:
         run: cd android && fastlane android internal
 
       - name: Create Release
-        uses: actions/create-release@v1
         if: success()
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          tag_name: v${{ github.run_number }}
-          release_name: Release v${{ github.run_number }}
-          body: |
-            Portfólio Android Build
-            - Build number: ${{ github.run_number }}
-            - Commit: ${{ github.sha }}
-            - Build date: $(date)
-            
-            Build artifacts available in Actions tab.
-          draft: false
-          prerelease: true
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "v${{ github.run_number }}" \
+            --title "Release v${{ github.run_number }}" \
+            --notes "Portfólio Android Build
+
+          - Build number: ${{ github.run_number }}
+          - Commit: ${{ github.sha }}
+          - Build date: $(date)
+
+          Build artifacts available in Actions tab." \
+            --prerelease
 
       - name: Notify Success
         if: success()

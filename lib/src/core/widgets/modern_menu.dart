@@ -63,7 +63,7 @@ class _ModernMenuState extends State<ModernMenu>
             end: Alignment.bottomRight,
             colors: [
               AppColors.darkBg,
-              AppColors.darkBg.withOpacity(0.8),
+              AppColors.darkBg.withValues(alpha: 0.8),
             ],
           ),
         ),
@@ -139,7 +139,7 @@ class _ModernMenuState extends State<ModernMenu>
             const SizedBox(height: 32),
 
             // Divider
-            Divider(color: AppColors.textSecondary.withOpacity(0.2)),
+            Divider(color: AppColors.textSecondary.withValues(alpha: 0.2)),
             const SizedBox(height: 16),
 
             // Navigation Items
@@ -192,13 +192,13 @@ class _ModernMenuState extends State<ModernMenu>
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
           colors: [
-            AppColors.darkBg.withOpacity(0.95),
-            AppColors.darkBg.withOpacity(0.85),
+            AppColors.darkBg.withValues(alpha: 0.95),
+            AppColors.darkBg.withValues(alpha: 0.85),
           ],
         ),
         boxShadow: [
           BoxShadow(
-            color: AppColors.primary.withOpacity(0.1),
+            color: AppColors.primary.withValues(alpha: 0.1),
             blurRadius: 20,
             offset: const Offset(0, 4),
           ),
@@ -336,7 +336,7 @@ class _AnimatedMenuItemState extends State<AnimatedMenuItem>
 
     _colorAnimation = ColorTween(
       begin: Colors.transparent,
-      end: AppColors.primary.withOpacity(0.1),
+      end: AppColors.primary.withValues(alpha: 0.1),
     ).animate(CurvedAnimation(parent: _controller, curve: Curves.easeOut));
   }
 

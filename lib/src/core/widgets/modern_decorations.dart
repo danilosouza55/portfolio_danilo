@@ -17,7 +17,7 @@ class ModernDecorations {
           CustomPaint(
             painter: GridPainter(
               gridSize: gridSize,
-              gridColor: gridColor ?? AppColors.border.withOpacity(0.1),
+              gridColor: gridColor ?? AppColors.border.withValues(alpha: 0.1),
             ),
             size: Size.infinite,
           ),
@@ -65,7 +65,7 @@ class ModernDecorations {
                     : AppColors.accentGradient,
                 boxShadow: [
                   BoxShadow(
-                    color: AppColors.primary.withOpacity(0.2),
+                    color: AppColors.primary.withValues(alpha: 0.2),
                     blurRadius: 20,
                   ),
                 ],
@@ -112,7 +112,7 @@ class ModernDecorations {
     double opacity = 0.7,
   }) {
     return Container(
-      color: (backgroundColor ?? AppColors.darkBg).withOpacity(opacity),
+      color: (backgroundColor ?? AppColors.darkBg).withValues(alpha: opacity),
       child: child,
     );
   }
@@ -128,7 +128,7 @@ class ModernDecorations {
       children: [
         CustomPaint(
           painter: DotsPainter(
-            dotsColor: dotsColor ?? AppColors.border.withOpacity(0.2),
+            dotsColor: dotsColor ?? AppColors.border.withValues(alpha: 0.2),
             dotSize: dotSize,
             spacing: spacing,
           ),

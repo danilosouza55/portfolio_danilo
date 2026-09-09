@@ -69,7 +69,7 @@ class _ModernSplashState extends State<ModernSplash>
                     borderRadius: BorderRadius.circular(20),
                     boxShadow: [
                       BoxShadow(
-                        color: AppColors.primary.withOpacity(0.5),
+                        color: AppColors.primary.withValues(alpha: 0.5),
                         blurRadius: 30,
                         spreadRadius: 5,
                       ),
@@ -156,7 +156,7 @@ class _ModernLoadingIndicatorState extends State<ModernLoadingIndicator>
           gradient: AppColors.primaryGradient,
           shape: BoxShape.circle,
           border: Border.all(
-            color: Colors.white.withOpacity(0.3),
+            color: Colors.white.withValues(alpha: 0.3),
             width: 3,
           ),
         ),
