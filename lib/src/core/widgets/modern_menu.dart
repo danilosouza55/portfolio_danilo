@@ -74,7 +74,7 @@ class _ModernMenuState extends State<ModernMenu>
             Align(
               alignment: Alignment.topRight,
               child: IconButton(
-                icon: Icon(Icons.close, color: AppColors.textPrimary),
+                icon: const Icon(Icons.close, color: AppColors.textPrimary),
                 onPressed: () => Navigator.of(context).pop(),
                 tooltip: 'Fechar menu',
               ),
@@ -96,7 +96,7 @@ class _ModernMenuState extends State<ModernMenu>
                     // Avatar with Border
                     Container(
                       padding: const EdgeInsets.all(3),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         gradient: AppColors.primaryGradient,
                         shape: BoxShape.circle,
                       ),
@@ -223,7 +223,7 @@ class _ModernMenuState extends State<ModernMenu>
                 // Avatar with Border
                 Container(
                   padding: const EdgeInsets.all(2),
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     gradient: AppColors.primaryGradient,
                     shape: BoxShape.circle,
                   ),

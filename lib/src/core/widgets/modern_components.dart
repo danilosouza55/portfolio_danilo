@@ -236,7 +236,7 @@ class SectionHeader extends StatelessWidget {
           const SizedBox(height: 24),
           Container(
             height: 1.5,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
                 colors: [
                   AppColors.primary,

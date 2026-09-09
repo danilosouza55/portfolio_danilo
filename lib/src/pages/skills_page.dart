@@ -22,7 +22,7 @@ class SkillsPage extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SectionHeader(
+                const SectionHeader(
                   title: 'Minhas Habilidades',
                   subtitle: 'Tecnologias e ferramentas que domino',
                 ),

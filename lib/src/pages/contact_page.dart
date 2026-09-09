@@ -44,8 +44,8 @@ class _ContactPageState extends State<ContactPage> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Não foi possível abrir o cliente de email'),
+            const SnackBar(
+              content: Text('Não foi possível abrir o cliente de email'),
               backgroundColor: AppColors.error,
             ),
           );
@@ -70,8 +70,8 @@ class _ContactPageState extends State<ContactPage> {
       } else {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: const Text('Não foi possível abrir o link'),
+            const SnackBar(
+              content: Text('Não foi possível abrir o link'),
               backgroundColor: AppColors.error,
             ),
           );
@@ -121,7 +121,7 @@ class _ContactPageState extends State<ContactPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SectionHeader(
+                const SectionHeader(
                   title: 'Entre em Contato',
                   subtitle: 'Vamos conversar sobre seu próximo projeto',
                 ),
@@ -175,9 +175,9 @@ class _ContactPageState extends State<ContactPage> {
               // Name Field
               TextFormField(
                 controller: _nameController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Nome',
-                  prefixIcon: const Icon(Icons.person),
+                  prefixIcon: Icon(Icons.person),
                   hintText: 'Seu nome completo',
                 ),
                 validator: (value) {
@@ -192,9 +192,9 @@ class _ContactPageState extends State<ContactPage> {
               // Email Field
               TextFormField(
                 controller: _emailController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'E-mail',
-                  prefixIcon: const Icon(Icons.email),
+                  prefixIcon: Icon(Icons.email),
                   hintText: 'seu.email@example.com',
                 ),
                 validator: (value) {
@@ -212,9 +212,9 @@ class _ContactPageState extends State<ContactPage> {
               // Message Field
               TextFormField(
                 controller: _messageController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Mensagem',
-                  prefixIcon: const Icon(Icons.message),
+                  prefixIcon: Icon(Icons.message),
                   hintText: 'Digite sua mensagem aqui',
                   alignLabelWithHint: true,
                 ),
@@ -329,7 +329,7 @@ class _ContactPageState extends State<ContactPage> {
             ),
           ),
           const SizedBox(width: 12),
-          Icon(
+          const Icon(
             Icons.arrow_forward_rounded,
             color: AppColors.primary,
             size: 20,

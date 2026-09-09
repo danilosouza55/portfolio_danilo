@@ -43,7 +43,7 @@ class _ModernSplashState extends State<ModernSplash>
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
         gradient: LinearGradient(
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -166,7 +166,7 @@ class _ModernLoadingIndicatorState extends State<ModernLoadingIndicator>
             Container(
               width: widget.size * 0.6,
               height: widget.size * 0.6,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 color: AppColors.darkBg,
                 shape: BoxShape.circle,
               ),
@@ -174,7 +174,7 @@ class _ModernLoadingIndicatorState extends State<ModernLoadingIndicator>
             Container(
               width: widget.size * 0.4,
               height: widget.size * 0.4,
-              decoration: BoxDecoration(
+              decoration: const BoxDecoration(
                 gradient: AppColors.accentGradient,
                 shape: BoxShape.circle,
               ),
